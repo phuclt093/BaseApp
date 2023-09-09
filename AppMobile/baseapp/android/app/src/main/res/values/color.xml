@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="success_color">@color/blue_1</color>
+    <color name="warning_color">@color/blue_1</color>
+    <color name="hint_color">@color/blue_5</color>
+
+    <color name="blue_1">#00101f</color>
+    <color name="blue_5">#0078ff</color>
+
+</resources>
