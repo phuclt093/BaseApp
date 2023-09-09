@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:baseapp/utils/localizationUtil.dart';
-import '../../helpers/color.dart';
+import '../../commons/themeValue.dart';
 import 'package:baseapp/helpers/session.dart';
 
 
@@ -192,12 +192,12 @@ class HomeScreenRouteState extends State<HomeScreenRoute>
         decoration: index == _selectedIndex
             ? const BoxDecoration(
                 border: Border(
-                  top: BorderSide(width: 6, color: colors.transparentColor),
+                  top: BorderSide(width: 6, color: Colors.transparent),
                 ),
               )
             : const BoxDecoration(
                 border: Border(
-                  top: BorderSide(width: 4, color: colors.transparentColor),
+                  top: BorderSide(width: 4, color: Colors.transparent),
                 ),
               ),
         child: Column(
@@ -206,15 +206,15 @@ class HomeScreenRouteState extends State<HomeScreenRoute>
               icon,
               //size: 15,
               color: index == _selectedIndex
-                  ? colors.primary
-                  : colors.disabledColor,
+                  ? Colors.greenAccent
+                  : Colors.red,
             ),
             Text(
               nameIcon,
               style: TextStyle(
                 color: index == _selectedIndex
-                    ? colors.primary
-                    : colors.disabledColor,
+                    ? Colors.greenAccent
+                    : Colors.red,
                 fontSize: index == _selectedIndex ? 12 : 12,
               ),
             ),
@@ -264,7 +264,7 @@ class HomeScreenRouteState extends State<HomeScreenRoute>
         extendBody: true,
         bottomNavigationBar: bottomBar(),
         body: _isLoading
-            ? showCircularProgress(_isLoading, colors.primary)
+            ? showCircularProgress(_isLoading, Colors.red)
             : IndexedStack(
                 children: fragments,
                 index: _selectedIndex,
@@ -272,103 +272,4 @@ class HomeScreenRouteState extends State<HomeScreenRoute>
       ),
     );
   }
-  //
-  // setAppBar() {
-  //   var textsizeSearch = 16.0;
-  //   Function onTapFnc = () {
-  //     Navigator.push(context,
-  //         CupertinoPageRoute(builder: (context) => HomeScreenSearchRoute()));
-  //   };
-  //   return PreferredSize(
-  //       preferredSize: Size(double.infinity, 70), //72
-  //       child: Container(
-  //           color: Theme.of(context).colorScheme.colorBackground_AppBar,
-  //           child: Column(
-  //             mainAxisAlignment: MainAxisAlignment.end,
-  //             children: [
-  //               Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-  //                 Expanded(
-  //                   flex: 6,
-  //                   child: Container(
-  //                       margin: EdgeInsets.only(left: 15, right: 15, bottom: 0),
-  //                       child: CommonWidget.getSearchBar(
-  //                           colorPrefixIcon: Theme.of(context)
-  //                               .colorScheme
-  //                               .color_SearchBoxLabel,
-  //                           autoFocus: false,
-  //                           hintText: getTranslated(
-  //                               context, "NhapTimKiemChucNang_lbl"),
-  //                           context: context,
-  //                           hintStyle: TextStyle(
-  //                               fontSize: textsizeSearch,
-  //                               color: Theme.of(context)
-  //                                   .colorScheme
-  //                                   .color_SearchBoxHint,
-  //                               fontWeight: FontWeight.bold),
-  //                           fillColor: Theme.of(context)
-  //                               .colorScheme
-  //                               .colorBackground_SearchBox
-  //                               .withOpacity(0.3),
-  //                           onTap: onTapFnc,
-  //                           height: 32.0,
-  //                           readOnly: true)),
-  //                 ),
-  //                 Expanded(
-  //                   flex: 3,
-  //                   child: Row(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     children: [
-  //                       Expanded(
-  //                           flex: 1,
-  //                           child: ElevatedButton(
-  //                             onPressed: () {
-  //                               Navigator.of(context).push(MaterialPageRoute(
-  //                                   builder: (BuildContext context) =>
-  //                                       QRViewExample()));
-  //                             },
-  //                             child: Icon(Icons.qr_code_scanner,
-  //                                 color: Theme.of(context)
-  //                                     .colorScheme
-  //                                     .color_SearchBoxLabel),
-  //                             style: ElevatedButton.styleFrom(
-  //                               elevation: 0.0,
-  //                               shadowColor: Colors.transparent,
-  //                               shape: CircleBorder(),
-  //                               padding: EdgeInsets.all(0),
-  //                               backgroundColor: Theme.of(context)
-  //                                   .colorScheme
-  //                                   .colorBackground_SearchBox
-  //                                   .withOpacity(0.3), // <-- Button color
-  //                             ),
-  //                           )),
-  //                       Expanded(
-  //                         flex: 1,
-  //                         child: ElevatedButton(
-  //                           onPressed: () {
-  //                             _selectedIndex = 3;
-  //                             setState(() {});
-  //                           },
-  //                           child: CommonWidget.getCircleAvatar(
-  //                               radius: 15,
-  //                               imageProvider:
-  //                                   AssetImage(Img.get("unknown_avatar.jpg"))),
-  //                           style: ElevatedButton.styleFrom(
-  //                             elevation: 0.0,
-  //                             shadowColor: Colors.transparent,
-  //                             shape: CircleBorder(),
-  //                             padding: EdgeInsets.all(0),
-  //                             backgroundColor: Theme.of(context)
-  //                                 .colorScheme
-  //                                 .colorBackground_SearchBox
-  //                                 .withOpacity(0.3), // <-- Button color
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 )
-  //               ]),
-  //             ],
-  //           )));
-  // }
 }

@@ -5,7 +5,7 @@ import 'package:baseapp/models/menu_model.dart';
 import 'package:baseapp/models/token.dart';
 import 'package:baseapp/pages/auth/authenticate_biometrics_screen.dart';
 import 'package:baseapp/utils/localizationUtil.dart';
-import '../../helpers/color.dart';
+import '../../commons/themeValue.dart';
 import '../../helpers/session.dart';
 
 DateTime loginClickTime = DateTime.now();
@@ -148,12 +148,12 @@ class HomeScreenSearchRouteState extends State<HomeScreenSearchRoute>
         decoration: index == _selectedIndex
             ? const BoxDecoration(
                 border: Border(
-                  top: BorderSide(width: 6, color: colors.transparentColor),
+                  top: BorderSide(width: 6, color: Colors.transparent),
                 ),
               )
             : const BoxDecoration(
                 border: Border(
-                  top: BorderSide(width: 4, color: colors.transparentColor),
+                  top: BorderSide(width: 4, color: Colors.transparent),
                 ),
               ),
         child: Column(
@@ -162,15 +162,15 @@ class HomeScreenSearchRouteState extends State<HomeScreenSearchRoute>
               icon,
               //size: 15,
               color: index == _selectedIndex
-                  ? colors.primary
-                  : colors.disabledColor,
+                  ? Colors.greenAccent
+                  : Colors.red,
             ),
             Text(
               nameIcon,
               style: TextStyle(
                 color: index == _selectedIndex
-                    ? colors.primary
-                    : colors.disabledColor,
+                    ? Colors.greenAccent
+                    : Colors.red,
                 fontSize: index == _selectedIndex ? 12 : 12,
               ),
             ),
@@ -206,7 +206,7 @@ class HomeScreenSearchRouteState extends State<HomeScreenSearchRoute>
         appBar: null,
         extendBody: true,
         body: _isLoading
-            ? showCircularProgress(_isLoading, colors.primary)
+            ? showCircularProgress(_isLoading,  Colors.red)
             : resultPage,
       ),
     );

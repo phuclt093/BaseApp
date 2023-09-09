@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'helpers/color.dart';
+import 'commons/themeValue.dart';
 import 'helpers/constant.dart';
-import 'helpers/http_helper.dart';
+import 'utils/httpUtil.dart';
 import 'package:provider/provider.dart';
 import 'helpers/theme.dart';
 import 'dart:ui' as ui;
@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> {
         statusBarIconBrightness: (isDark != null && isDark == true)
             ? Brightness.light
             : Brightness.dark,
-        statusBarColor: colors.transparentColor));
+        statusBarColor: Colors.transparent));
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return Consumer<LanguageNotifier>(builder: (context, data, child) {
       return Sizer(builder: (context, orientation, deviceType) {
@@ -113,44 +113,44 @@ class _MyAppState extends State<MyApp> {
           },
           title: appName,
           theme: ThemeData(
-            primaryColor: colors.primary,
-            splashColor: colors.primary,
+            primaryColor: Colors.blue,
+            splashColor: Colors.white,
             fontFamily: 'Sarabun',
             //'Neue Helvetica',
-            canvasColor: colors.bgColor,
+            canvasColor: Colors.blue,
             brightness: Brightness.light,
-            scaffoldBackgroundColor: colors.colorBackgroundMomo,
+            scaffoldBackgroundColor: Colors.white,
             appBarTheme: const AppBarTheme(
                 elevation: 0.0,
-                backgroundColor: colors.transparentColor,
+                backgroundColor: Colors.transparent,
                 systemOverlayStyle: SystemUiOverlayStyle(
                     statusBarBrightness: Brightness.light,
                     statusBarIconBrightness: Brightness.dark,
-                    statusBarColor: colors.transparentColor)),
+                    statusBarColor: Colors.transparent)),
             colorScheme:
-                ColorScheme.fromSwatch(primarySwatch: colors.primaryApp)
+                ColorScheme.fromSwatch(primarySwatch: Colors.red)
                     .copyWith(
-                        secondary: colors.primary,
+                        secondary: Colors.red,
                         brightness: Brightness.light),
           ),
           darkTheme: ThemeData(
             fontFamily: 'Sarabun',
-            primaryColor: colors.secondaryColor,
-            splashColor: colors.primary,
+            primaryColor: Colors.red,
+            splashColor:  Colors.red,
             brightness: Brightness.dark,
-            canvasColor: colors.darkModeColor,
-            scaffoldBackgroundColor: colors.darkModeColor,
+            canvasColor:  Colors.red,
+            scaffoldBackgroundColor:  Colors.red,
             appBarTheme: const AppBarTheme(
                 elevation: 0.0,
-                backgroundColor: colors.transparentColor,
+                backgroundColor:  Colors.transparent,
                 systemOverlayStyle: SystemUiOverlayStyle(
                     statusBarBrightness: Brightness.dark,
                     statusBarIconBrightness: Brightness.light,
-                    statusBarColor: colors.transparentColor)),
+                    statusBarColor: Colors.transparent)),
             colorScheme:
-                ColorScheme.fromSwatch(primarySwatch: colors.primaryApp)
+                ColorScheme.fromSwatch(primarySwatch: Colors.red)
                     .copyWith(
-                        secondary: colors.primary, brightness: Brightness.dark),
+                        secondary: Colors.red, brightness: Brightness.dark),
           ),
           initialRoute: '/',
           routes: {

@@ -1,6 +1,6 @@
 class CommonUtil {
     static bool IsNetworkAvailable(){
-      var isNetwork = false;
+      var isNetwork = true;
       return isNetwork;
     }
 }

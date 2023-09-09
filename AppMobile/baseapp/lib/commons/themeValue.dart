@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
-extension colors on ColorScheme {
+extension themeValue on ColorScheme {
   static MaterialColor primaryApp = const MaterialColor(
     0xffff3f4c,
     const <int, Color>{
@@ -58,7 +59,19 @@ extension colors on ColorScheme {
     Color(0xffFF6C55),
   ];
 
-  Color get colorBackground => this.brightness == Brightness.light ? Colors.white :  Colors.black;
+  Color get colorBackground => this.brightness == Brightness.light ? Colors.white :  Colors.white;
+  Color get colorButtonLogin_Background => this.brightness == Brightness.light ? Colors.black :  Colors.black;
+  Color get colorButtonLogin_Text => this.brightness == Brightness.light ? Colors.white :  Colors.white;
+  Color get colorBorder_TextBox => this.brightness == Brightness.light ? Colors.transparent :  Colors.transparent;
+  Color get colorBorderActive_TextBox => this.brightness == Brightness.light ? Colors.transparent :  Colors.transparent;
+  Color get colorBackground_TextBox => this.brightness == Brightness.light ? Color(0xffF5F5F5) :  Color(0xffF5F5F5);
+  Color get colorFont_TextBox => this.brightness == Brightness.light ? Colors.black :  Colors.black;
+  Color get colorHint_TextBox => this.brightness == Brightness.light ? Colors.grey :  Colors.grey;
+
+//Size
+  static double TextBox_BorderRadius = 35.sp;
+  static double Button_BorderRadius = 35.sp;
+
 
   Color get colorTextChuY => Color(0xffe74c3c);
   Color get colorTextChuYAfter => Color(0xff0000ff);

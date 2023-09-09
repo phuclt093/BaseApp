@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:sizer/sizer.dart';
-import 'package:baseapp/helpers/color.dart';
+import 'package:baseapp/commons/themeValue.dart';
 import 'package:baseapp/models/token.dart';
 import 'package:baseapp/pages/auth/authentication.dart';
 import 'package:baseapp/pages/common/toast_message.dart';
@@ -9,9 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:baseapp/utils/commonUtil.dart';
 import 'package:baseapp/utils/localizationUtil.dart';
 import '../../data/img.dart';
-import '../../data/my_colors.dart';
 import '../../helpers/session.dart';
-import '../../helpers/http_helper.dart';
+import '../../utils/httpUtil.dart';
 import '../common/progress_circle_center.dart';
 
 class LoginNewScreenRoute extends StatefulWidget {
@@ -24,7 +23,7 @@ class LoginNewScreenRoute extends StatefulWidget {
 class LoginNewScreenRouteState extends State<LoginNewScreenRoute>
     with TickerProviderStateMixin {
   bool finishLoading = false;
-  late String _email, _password;
+  late String _username, _password;
   bool isCheckedRememberMe = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isObsecure = true;
@@ -52,8 +51,7 @@ class LoginNewScreenRouteState extends State<LoginNewScreenRoute>
   double offsetX = 0;
   double offsetY = 3;
 
-  void showInSnackBar(String value) {
-  }
+  void showInSnackBar(String value) {}
 
   @override
   void initState() {
@@ -69,75 +67,89 @@ class LoginNewScreenRouteState extends State<LoginNewScreenRoute>
     }, 700);
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      //backgroundColor: Colors.white,
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(0),
-          child: Container(color: Theme.of(context).colorScheme.colorBackground)),
-      body: SingleChildScrollView(
-          child: Align(
+    return Stack(
+      children: [
+        Image.asset(
+          "assets/images/main_background.jpg",
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          fit: BoxFit.fill,
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          key: _scaffoldKey,
+          //backgroundColor: Colors.white,
+          appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(0),
+              child: Container(
+                  color: Theme.of(context).colorScheme.colorBackground)),
+          body: SingleChildScrollView(
+              child: Align(
             child: Column(
               children: <Widget>[
-                Container(height: 20),
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 10.h, 0, 0),
+                  margin: EdgeInsets.fromLTRB(0, 20.h, 0, 0),
                   child: Image.asset(
-                    Img.get('logo-white.png'),
+                    Img.get('logo_only.png'),
                     //color: Colors.white,
                   ),
-                  width: 40.w,
-                  height: 17.h,
+                  width: 80.w,
+                  height: 12.h,
                 ),
-                Container(height: 10),
-                !finishLoading
-                    ? AnimatedOpacity(
-                  opacity: finishLoading ? 0.0 : 1.0,
-                  duration: const Duration(milliseconds: 500),
-                  child: ProgressCircleCenter(context).buildLoading(),
-                )
-                    : Form(
-                  key: _formKey,
-                  child: Container(
-                    padding: const EdgeInsetsDirectional.only(
-                        top: 35.0, bottom: 20.0, start: 20.0, end: 20.0),
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        usernameSet(),
-                        passSet(),
-                        Container(height: 25),
-                        Container(
-                          height: 65,
-                          width: 65,
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.fingerprint,
-                              size: 45,
-                            ),
-                            tooltip: 'Login by biometrics',
-                            onPressed: () {
-                              ToastMessage.showColoredToast(
-                                  "Đăng nhập bằng sinh trắc học.", "OK");
-                              _handleRefreshTokenByBiometrics();
-                            },
-                          ),
-                        ),
-                        Container(height: 20),
-                        loginBtn(),
-                      ],
-                    ),
+
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 0.5.h, 0, 5.h),
+                  child: Text(
+                    LocalizationUtil.translate("lblChatYourWay"),
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.sp,
+                        color: Theme.of(context).colorScheme.colorHint_TextBox),
                   ),
                 ),
+                UsernameBox(),
+                PasswordBox(),
+                LoginButtonBox(),
+
+                // Form(
+                //   key: _formKey,
+                //   child: Container(
+                //     margin: EdgeInsets.only(left: 15.w, right: 15.w),
+                //     width: MediaQuery.of(context).size.width,
+                //     child: Column(
+                //       mainAxisSize: MainAxisSize.min,
+                //       children: <Widget>[
+                //         // Container(
+                //         //   height: 65,
+                //         //   width: 65,
+                //         //   child: IconButton(
+                //         //     icon: const Icon(
+                //         //       Icons.fingerprint,
+                //         //       size: 45,
+                //         //     ),
+                //         //     tooltip: 'Login by biometrics',
+                //         //     onPressed: () {
+                //         //       ToastMessage.showColoredToast(
+                //         //           "Đăng nhập bằng sinh trắc học.", "OK");
+                //         //       _handleRefreshTokenByBiometrics();
+                //         //     },
+                //         //   ),
+                //         // ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           )),
+        )
+      ],
     );
   }
+
   getCodeLangge() async {
     setState(() async {
       codeLangue = await LocalizationUtil.GetLanguage();
@@ -154,7 +166,7 @@ class LoginNewScreenRouteState extends State<LoginNewScreenRoute>
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       userName.text = prefs.getString("initUsername") ?? "";
-      _email = userName.text;
+      _username = userName.text;
       _password = passWord.text;
 
       setFinishWorking(true);
@@ -225,11 +237,11 @@ class LoginNewScreenRouteState extends State<LoginNewScreenRoute>
             prefs.setString("hashinfo", token.hashinfo ?? "");
 
             if (!isLoginByBiometrics) {
-              prefs.setString("username_bi", _email);
+              prefs.setString("username_bi", _username);
               prefs.setString("password_bi", _password);
 
               if (isCheckedRememberMe) {
-                prefs.setString("initUsername", _email);
+                prefs.setString("initUsername", _username);
                 prefs.setString("initPassword", _password);
                 prefs.setString("initUserType", userType ?? "");
               } else {
@@ -274,137 +286,138 @@ class LoginNewScreenRouteState extends State<LoginNewScreenRoute>
     });
   }
 
-  usernameSet() {
-    //Login User
-    return Padding(
-      padding: const EdgeInsets.only(top: 40.0),
-      child: Container(
-        child: TextFormField(
-          focusNode: emailFocus,
-          textInputAction: TextInputAction.next,
-          style: Theme.of(context)
-              .textTheme
-              .subtitle1
-              ?.copyWith(color: Theme.of(context).colorScheme.fontColor),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return LocalizationUtil.translate('username_required')!;
-            }
-          },
-          onChanged: (String value) {
-            setState(() {
-              _email = value;
-            });
-          },
-          controller: userName,
-          onFieldSubmitted: (v) {
-            _fieldFocusChange(context, emailFocus, passFocus);
-          },
-          decoration: InputDecoration(
-            hintText: LocalizationUtil.translate('StudentID')!,
-            hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
-                color:
-                    Theme.of(context).colorScheme.darkColor.withOpacity(0.5)),
-            filled: true,
-            fillColor: Theme.of(context).colorScheme.boxColor,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .borderColor
-                      .withOpacity(0.7)),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
+  UsernameBox() {
+    return Container(
+      margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 1.h, top: 2.h),
+      child: TextFormField(
+        focusNode: emailFocus,
+        textInputAction: TextInputAction.next,
+        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+            color: Theme.of(context).colorScheme.colorFont_TextBox,
+            fontWeight: FontWeight.bold),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return LocalizationUtil.translate('username_required')!;
+          }
+        },
+        onChanged: (String value) {
+          setState(() {
+            _username = value;
+          });
+        },
+        controller: userName,
+        onFieldSubmitted: (v) {
+          _fieldFocusChange(context, emailFocus, passFocus);
+        },
+        decoration: InputDecoration(
+          hintText: LocalizationUtil.translate('Username')!,
+          hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
+              color: Theme.of(context)
+                  .colorScheme
+                  .colorHint_TextBox
+                  .withOpacity(0.5)),
+          filled: true,
+          fillColor: Theme.of(context)
+              .colorScheme
+              .colorBackground_TextBox
+              .withOpacity(0.7),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.colorBorderActive_TextBox),
+            borderRadius:
+                BorderRadius.circular(themeValue.TextBox_BorderRadius),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.colorBorder_TextBox),
+            borderRadius:
+                BorderRadius.circular(themeValue.TextBox_BorderRadius),
           ),
         ),
       ),
     );
   }
 
-  passSet() {
+  PasswordBox() {
     //Login User
-    return Padding(
-        padding: const EdgeInsets.only(top: 20.0),
-        child: Container(
-          child: TextFormField(
-            focusNode: passFocus,
-            textInputAction: TextInputAction.done,
-            controller: passWord,
-            obscureText: _isObsecure,
-            style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                  color: Theme.of(context).colorScheme.fontColor,
-                ),
-            // validator: (val) => passValidation(val!, context),
-            onChanged: (String value) {
-              setState(() {
-                _password = value;
-              });
-            },
-            decoration: InputDecoration(
-              hintText: LocalizationUtil.translate('pass_lbl')!,
-              hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .darkColor
-                        .withOpacity(0.5),
-                  ),
-              suffixIcon: Padding(
-                  padding: const EdgeInsetsDirectional.only(end: 12.0),
-                  child: IconButton(
-                    icon: _isToggle
-                        ? Icon(Icons.visibility_rounded, size: 20)
-                        : Icon(Icons.visibility_off_rounded, size: 20),
-                    splashColor: colors.clearColor,
-                    onPressed: () {
-                      _toggle();
-                    },
-                  )),
-              filled: true,
-              fillColor: Theme.of(context).colorScheme.boxColor,
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 25, vertical: 17),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .borderColor
-                        .withOpacity(0.6)),
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
+    return Container(
+      margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 5.h, top: 1.h),
+      child: TextFormField(
+        focusNode: passFocus,
+        textInputAction: TextInputAction.done,
+        controller: passWord,
+        obscureText: _isObsecure,
+        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+            color: Theme.of(context).colorScheme.colorFont_TextBox,
+            fontWeight: FontWeight.bold),
+        // validator: (val) => passValidation(val!, context),
+        onChanged: (String value) {
+          setState(() {
+            _password = value;
+          });
+        },
+        decoration: InputDecoration(
+          hintText: LocalizationUtil.translate('pass_lbl')!,
+          hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
+              color: Theme.of(context)
+                  .colorScheme
+                  .colorHint_TextBox
+                  .withOpacity(0.5)),
+          suffixIcon: Padding(
+              padding: const EdgeInsetsDirectional.only(end: 12.0),
+              child: IconButton(
+                icon: _isToggle
+                    ? Icon(Icons.visibility_rounded, size: 20)
+                    : Icon(Icons.visibility_off_rounded, size: 20),
+                splashColor: themeValue.colorBackgroundMomo,
+                onPressed: () {
+                  _toggle();
+                },
+              )),
+          filled: true,
+          fillColor: Theme.of(context)
+              .colorScheme
+              .colorBackground_TextBox
+              .withOpacity(0.7),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.colorBorderActive_TextBox),
+            borderRadius:
+                BorderRadius.circular(themeValue.TextBox_BorderRadius),
           ),
-        ));
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.colorBorder_TextBox),
+            borderRadius:
+                BorderRadius.circular(themeValue.TextBox_BorderRadius),
+          ),
+        ),
+      ),
+    );
   }
 
-  loginBtn() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20.0),
+  LoginButtonBox() {
+    return Container(
+      margin: EdgeInsets.only(left: 30.w, right: 30.w, bottom: 1.h, top: 1.h),
       child: InkWell(
           splashColor: Colors.transparent,
           child: Container(
-            height: 6.5.h,
-            width: 80.w,
+            height: 6.h,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-                color: colors.primary,
-                borderRadius: BorderRadius.circular(7.0)),
+                color:
+                    Theme.of(context).colorScheme.colorButtonLogin_Background,
+                borderRadius:
+                    BorderRadius.circular(themeValue.Button_BorderRadius)),
             child: Text(
               LocalizationUtil.translate('login_txt')!, //login_btn
-              style: Theme.of(context).textTheme.headline6?.copyWith(
-                  color: colors.tempboxColor,
-                  fontWeight: FontWeight.w600,
+              style: TextStyle(
                   fontSize: 14.sp,
-                  letterSpacing: 0.6),
+                  color: Theme.of(context).colorScheme.colorButtonLogin_Text),
             ),
           ),
           onTap: () async {
@@ -416,7 +429,7 @@ class LoginNewScreenRouteState extends State<LoginNewScreenRoute>
               });
 
               var deviceID = await Authentication.getDeviceID();
-              submitLoginForm(_email, _password, deviceID, false);
+              submitLoginForm(_username, _password, deviceID, false);
 
               //signInWithEmailPassword(email!.trim(), pass!);
             } else {

@@ -8,7 +8,7 @@ import 'package:baseapp/utils/commonUtil.dart';
 import '../commons/const_value.dart';
 import 'package:http/http.dart' as http;
 
-import 'Session.dart';
+import '../helpers/Session.dart';
 
 class HttpHelper {
   static Future<String> fetchPostWithoutLogin(String ulr, Map<String, String> parameters,

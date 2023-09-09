@@ -1,4 +1,5 @@
 {
+  "lblChatYourWay": "Chat anywhere, anytime",
   "Notification_Detail": "Notification Detail",
   "QrCode_Note": "Bạn sẽ được yêu cầu xác thực sinh trắc học để bảo vệ tài khoản",
   "ThietBi": "Thiết bị",
@@ -435,5 +436,6 @@
   "CongTacSinhVien": "Student affairs",
   "QuayLai": "Return",
   "Announcement": "Announcement",
-  "StudentID": "Student ID"
+  "StudentID": "Student ID",
+  "Username": "Username"
 }

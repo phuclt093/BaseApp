@@ -1,4 +1,4 @@
-import 'package:baseapp/helpers/color.dart';
+import 'package:baseapp/commons/themeValue.dart';
 import 'package:baseapp/pages/auth/authentication.dart';
 import 'package:baseapp/pages/common/toast_message.dart';
 import 'package:flutter/material.dart';
@@ -169,12 +169,7 @@ class AuthenticateBiometricsRouteState
                             enableAuthenticateCheck(isDisabled);
                           },
                           value: isDisabled,
-                          activeColor: /* Theme.of(context).colorScheme.settingIconColor, */
-                              colors.primary,
-                          activeTrackColor: /*  Theme.of(context)
-                      .colorScheme
-                      .settingIconColor, */
-                              colors.primary,
+                          activeColor: Theme.of(context).colorScheme.colorBackground,
                           inactiveThumbColor: Colors.grey,
                           inactiveTrackColor: Colors.grey,
                         ),
@@ -204,7 +199,7 @@ class AuthenticateBiometricsRouteState
       body: Stack(
         children: <Widget>[
           _showContent(),
-          showCircularProgress(_isLoading, colors.primary)
+          showCircularProgress(_isLoading, Colors.black)
         ],
       ),
     );
