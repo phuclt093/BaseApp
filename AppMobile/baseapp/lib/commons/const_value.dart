@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class ConstValue {
   // static String BaseUrlTest = "https://pj-tntt.conveyor.cloud/Vfis/";
   //
@@ -20,5 +22,11 @@ class ConstValue {
   static String recentMenuIDStr = "";
   static String BaseUrl = "https://restapi.tdtu.edu.vn/TDT/";
   static String BaseUrlSTDPortal = "http://test12.tdtu.edu.vn/";
+
+
+  static List<DropdownMenuItem<Locale>> dropdownItems = [
+    const DropdownMenuItem(child: Text("VI"), value: Locale("vi","VN")),
+    const DropdownMenuItem(child: Text("US"), value: Locale("en","US")),
+  ];
 
 }

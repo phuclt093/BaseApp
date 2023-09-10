@@ -169,7 +169,7 @@ class AuthenticateBiometricsRouteState
                             enableAuthenticateCheck(isDisabled);
                           },
                           value: isDisabled,
-                          activeColor: Theme.of(context).colorScheme.colorBackground,
+                          activeColor: Theme.of(context).colorScheme.colorMainBackground,
                           inactiveThumbColor: Colors.grey,
                           inactiveTrackColor: Colors.grey,
                         ),

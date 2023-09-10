@@ -59,12 +59,14 @@ extension themeValue on ColorScheme {
   static const Color processCircleBarColor = Colors.pink;
 
   //Control
-  Color get colorBackground =>
+  Color get colorMainBackground =>
       this.brightness == Brightness.light ? Colors.white : Colors.white;
+
   Color get colorButtonLogin_Background =>
       this.brightness == Brightness.light ? Colors.black : Colors.black;
   Color get colorButtonLogin_Text =>
       this.brightness == Brightness.light ? Colors.white : Colors.white;
+
   Color get colorBorder_TextBox => this.brightness == Brightness.light
       ? Colors.transparent
       : Colors.transparent;
@@ -79,15 +81,26 @@ extension themeValue on ColorScheme {
   Color get colorHint_TextBox => this.brightness == Brightness.light
       ? Colors.grey.withOpacity(0.5)
       : Colors.grey.withOpacity(0.5);
+
   Color get colorSplashSuffix_Password => this.brightness == Brightness.light
       ? Colors.green.withOpacity(0.5)
       : Colors.green.withOpacity(0.5);
+
+  Color get colorBackground_Dropdown => this.brightness == Brightness.light
+      ? Color(0xffF5F5F5)
+      : Color(0xffF5F5F5);
+  Color get colorFont_Dropdown =>
+      this.brightness == Brightness.light ? Colors.black : Colors.black;
+  Color get colorIconEnabled_Dropdown =>
+      this.brightness == Brightness.light ? Colors.black : Colors.black;
 
 
 //Size
   static double TextBox_BorderRadius = 35.sp;
   static double Button_BorderRadius = 35.sp;
 
+
+  //Other
   Color get colorTextChuY => Color(0xffe74c3c);
 
   Color get colorTextChuYAfter => Color(0xff0000ff);
