@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:baseapp/commons/const_value.dart';
 import 'package:baseapp/commons/themeValue.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -88,7 +89,7 @@ Widget showCircularProgress(bool _isProgress, Color color) {
             //   radius: 15,
             //   backgroundColor: Colors.white,
             // ),
-            Image.asset(Img.get('logo_only.png'),
+            Image.asset(Img.get(ConstValue.path_full_logo),
                 fit: BoxFit.fill, height: 20, width: 30),
             const CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(

@@ -114,43 +114,43 @@ class _MyAppState extends State<MyApp> {
           title: appName,
           theme: ThemeData(
             primaryColor: Colors.blue,
-            splashColor: Colors.white,
+            splashColor: themeValue.splashColorLight,
             fontFamily: 'Sarabun',
             //'Neue Helvetica',
             canvasColor: Colors.blue,
-            brightness: Brightness.light,
-            scaffoldBackgroundColor: Colors.white,
+            brightness: themeValue.brightnessLight,
+            scaffoldBackgroundColor: themeValue.splashBackgroundColorLight,
             appBarTheme: const AppBarTheme(
                 elevation: 0.0,
                 backgroundColor: Colors.transparent,
                 systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarBrightness: Brightness.light,
-                    statusBarIconBrightness: Brightness.dark,
-                    statusBarColor: Colors.transparent)),
-            colorScheme:
-                ColorScheme.fromSwatch(primarySwatch: Colors.red)
-                    .copyWith(
-                        secondary: Colors.red,
-                        brightness: Brightness.light),
+                    statusBarBrightness: themeValue.statusBarBrightnessLight,
+                    statusBarIconBrightness: themeValue.statusBarIconBrightnessLight,
+                    statusBarColor: themeValue.statusBarColorLight)),
+            // colorScheme:
+            //     ColorScheme.fromSwatch(primarySwatch: Colors.red)
+            //         .copyWith(
+            //             secondary: Colors.red,
+            //             brightness: Brightness.light),
           ),
           darkTheme: ThemeData(
             fontFamily: 'Sarabun',
             primaryColor: Colors.red,
-            splashColor:  Colors.red,
-            brightness: Brightness.dark,
+            splashColor:  themeValue.splashColorDark,
+            brightness: themeValue.brightnessDark,
             canvasColor:  Colors.red,
-            scaffoldBackgroundColor:  Colors.red,
+            scaffoldBackgroundColor:  themeValue.splashBackgroundColorDark,
             appBarTheme: const AppBarTheme(
                 elevation: 0.0,
                 backgroundColor:  Colors.transparent,
                 systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarBrightness: Brightness.dark,
-                    statusBarIconBrightness: Brightness.light,
-                    statusBarColor: Colors.transparent)),
-            colorScheme:
-                ColorScheme.fromSwatch(primarySwatch: Colors.red)
-                    .copyWith(
-                        secondary: Colors.red, brightness: Brightness.dark),
+                    statusBarBrightness: themeValue.statusBarBrightnessDark,
+                    statusBarIconBrightness: themeValue.statusBarIconBrightnessDark,
+                    statusBarColor: themeValue.statusBarColorDark)),
+            // colorScheme:
+            //     ColorScheme.fromSwatch(primarySwatch: Colors.red)
+            //         .copyWith(
+            //             secondary: Colors.red, brightness: Brightness.dark),
           ),
           initialRoute: '/',
           routes: {

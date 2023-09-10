@@ -12,6 +12,9 @@ class ConstValue {
 
   // static String? APP_THEME = "";
 
+  static String path_full_logo = "logo_full.png";
+  static String path_only_logo = "logo_only.png";
+
   static String chucnangSearchText = "";
   static String defaultLanguageCode = "en";
   static String recentMenuIDStr = "";

@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:baseapp/commons/const_value.dart';
+import 'package:baseapp/widgets/CustomPasswordFieldWidget.dart';
+import 'package:baseapp/widgets/CustomTextFieldWidget.dart';
 import 'package:sizer/sizer.dart';
 import 'package:baseapp/commons/themeValue.dart';
 import 'package:baseapp/models/token.dart';
@@ -27,7 +30,6 @@ class LoginNewScreenRouteState extends State<LoginNewScreenRoute>
   bool isCheckedRememberMe = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isObsecure = true;
-  bool _isToggle = true;
 
   String initUsername = "";
   String initPassword = "";
@@ -73,8 +75,14 @@ class LoginNewScreenRouteState extends State<LoginNewScreenRoute>
       children: [
         Image.asset(
           "assets/images/main_background.jpg",
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+          height: MediaQuery
+              .of(context)
+              .size
+              .height,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
           fit: BoxFit.fill,
         ),
         Scaffold(
@@ -84,67 +92,140 @@ class LoginNewScreenRouteState extends State<LoginNewScreenRoute>
           appBar: PreferredSize(
               preferredSize: const Size.fromHeight(0),
               child: Container(
-                  color: Theme.of(context).colorScheme.colorBackground)),
+                  color: Theme
+                      .of(context)
+                      .colorScheme
+                      .colorBackground)),
           body: SingleChildScrollView(
               child: Align(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 20.h, 0, 0),
-                  child: Image.asset(
-                    Img.get('logo_only.png'),
-                    //color: Colors.white,
-                  ),
-                  width: 80.w,
-                  height: 12.h,
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 20.h, 0, 0),
+                      child: Image.asset(
+                        Img.get(ConstValue.path_full_logo),
+                        //color: Colors.white,
+                      ),
+                      width: 80.w,
+                      height: 12.h,
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 0.5.h, 0, 5.h),
+                      child: Text(
+                        LocalizationUtil.translate("lblChatYourWay"),
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12.sp,
+                            color: Theme
+                                .of(context)
+                                .colorScheme
+                                .colorHint_TextBox),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          left: 10.w, right: 10.w, bottom: 1.h, top: 2.h),
+                      child: CustomTextFieldWidget(
+                          focusNode: emailFocus,
+                          borderRadius: themeValue.TextBox_BorderRadius,
+                          coloBackground: Theme
+                              .of(context)
+                              .colorScheme
+                              .colorBackground_TextBox
+                              .withOpacity(0.7),
+                          colorBorderEnabled:
+                          Theme
+                              .of(context)
+                              .colorScheme
+                              .colorBorder_TextBox,
+                          colorBorderFocus: Theme
+                              .of(context)
+                              .colorScheme
+                              .colorBorderActive_TextBox,
+                          onChangeFunc: (String? value) {
+                            setState(() {
+                              // _username = value;
+                            });
+                          },
+                          colorFont:
+                          Theme
+                              .of(context)
+                              .colorScheme
+                              .colorFont_TextBox,
+                          colorFontHint:
+                          Theme
+                              .of(context)
+                              .colorScheme
+                              .colorHint_TextBox,
+                          textController: userName,
+                          onFieldSubmitFunc: (v) {
+                            _fieldFocusChange(context, emailFocus, passFocus);
+                          },
+                          hintLabel: LocalizationUtil.translate('Username')!),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          left: 10.w, right: 10.w, bottom: 5.h, top: 1.h),
+                      child: CustomPasswordFieldWidget(
+                        focusNode: passFocus,
+                        borderRadius: themeValue.TextBox_BorderRadius,
+                        coloBackground: Theme
+                            .of(context)
+                            .colorScheme
+                            .colorBackground_TextBox
+                            .withOpacity(0.7),
+                        colorBorderEnabled: Theme
+                            .of(context)
+                            .colorScheme
+                            .colorBorder_TextBox,
+                        colorBorderFocus:
+                        Theme
+                            .of(context)
+                            .colorScheme
+                            .colorBorderActive_TextBox,
+                        onChangeFunc: (String? value) {
+                          setState(() {
+                            _password = value!;
+                          });
+                        },
+                        colorFont: Theme
+                            .of(context)
+                            .colorScheme
+                            .colorFont_TextBox,
+                        colorFontHint: Theme
+                            .of(context)
+                            .colorScheme
+                            .colorHint_TextBox,
+                        textController: passWord,
+                        onFieldSubmitFunc: (v) {},
+                        hintLabel: LocalizationUtil.translate('pass_lbl')!,
+                        suffixIcon: Padding(
+                            padding: EdgeInsetsDirectional.only(end: 1.w),
+                            child: IconButton(
+                              icon: !_isObsecure
+                                  ? Icon(Icons.visibility_rounded, size: 2.h)
+                                  : Icon(
+                                  Icons.visibility_off_rounded, size: 2.h),
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .colorHint_TextBox,
+                              splashColor: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .colorSplashSuffix_Password,
+                              onPressed: () {
+                                _toggle();
+                              },
+                            )),
+                        isObsecureText: _isObsecure,
+                      ),
+                    ),
+                    LoginButtonBox(),
+                  ],
                 ),
-
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 0.5.h, 0, 5.h),
-                  child: Text(
-                    LocalizationUtil.translate("lblChatYourWay"),
-                    style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12.sp,
-                        color: Theme.of(context).colorScheme.colorHint_TextBox),
-                  ),
-                ),
-                UsernameBox(),
-                PasswordBox(),
-                LoginButtonBox(),
-
-                // Form(
-                //   key: _formKey,
-                //   child: Container(
-                //     margin: EdgeInsets.only(left: 15.w, right: 15.w),
-                //     width: MediaQuery.of(context).size.width,
-                //     child: Column(
-                //       mainAxisSize: MainAxisSize.min,
-                //       children: <Widget>[
-                //         // Container(
-                //         //   height: 65,
-                //         //   width: 65,
-                //         //   child: IconButton(
-                //         //     icon: const Icon(
-                //         //       Icons.fingerprint,
-                //         //       size: 45,
-                //         //     ),
-                //         //     tooltip: 'Login by biometrics',
-                //         //     onPressed: () {
-                //         //       ToastMessage.showColoredToast(
-                //         //           "Đăng nhập bằng sinh trắc học.", "OK");
-                //         //       _handleRefreshTokenByBiometrics();
-                //         //     },
-                //         //   ),
-                //         // ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
-          )),
+              )),
         )
       ],
     );
@@ -272,132 +353,16 @@ class LoginNewScreenRouteState extends State<LoginNewScreenRoute>
     }
   }
 
-  _fieldFocusChange(
-      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+  _fieldFocusChange(BuildContext context, FocusNode currentFocus,
+      FocusNode nextFocus) {
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
   void _toggle() {
     setState(() {
-      _isToggle = !_isToggle;
-      //secure entered text
       _isObsecure = !_isObsecure;
     });
-  }
-
-  UsernameBox() {
-    return Container(
-      margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 1.h, top: 2.h),
-      child: TextFormField(
-        focusNode: emailFocus,
-        textInputAction: TextInputAction.next,
-        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-            color: Theme.of(context).colorScheme.colorFont_TextBox,
-            fontWeight: FontWeight.bold),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return LocalizationUtil.translate('username_required')!;
-          }
-        },
-        onChanged: (String value) {
-          setState(() {
-            _username = value;
-          });
-        },
-        controller: userName,
-        onFieldSubmitted: (v) {
-          _fieldFocusChange(context, emailFocus, passFocus);
-        },
-        decoration: InputDecoration(
-          hintText: LocalizationUtil.translate('Username')!,
-          hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
-              color: Theme.of(context)
-                  .colorScheme
-                  .colorHint_TextBox
-                  .withOpacity(0.5)),
-          filled: true,
-          fillColor: Theme.of(context)
-              .colorScheme
-              .colorBackground_TextBox
-              .withOpacity(0.7),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.colorBorderActive_TextBox),
-            borderRadius:
-                BorderRadius.circular(themeValue.TextBox_BorderRadius),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.colorBorder_TextBox),
-            borderRadius:
-                BorderRadius.circular(themeValue.TextBox_BorderRadius),
-          ),
-        ),
-      ),
-    );
-  }
-
-  PasswordBox() {
-    //Login User
-    return Container(
-      margin: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 5.h, top: 1.h),
-      child: TextFormField(
-        focusNode: passFocus,
-        textInputAction: TextInputAction.done,
-        controller: passWord,
-        obscureText: _isObsecure,
-        style: Theme.of(context).textTheme.subtitle1?.copyWith(
-            color: Theme.of(context).colorScheme.colorFont_TextBox,
-            fontWeight: FontWeight.bold),
-        // validator: (val) => passValidation(val!, context),
-        onChanged: (String value) {
-          setState(() {
-            _password = value;
-          });
-        },
-        decoration: InputDecoration(
-          hintText: LocalizationUtil.translate('pass_lbl')!,
-          hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
-              color: Theme.of(context)
-                  .colorScheme
-                  .colorHint_TextBox
-                  .withOpacity(0.5)),
-          suffixIcon: Padding(
-              padding: const EdgeInsetsDirectional.only(end: 12.0),
-              child: IconButton(
-                icon: _isToggle
-                    ? Icon(Icons.visibility_rounded, size: 20)
-                    : Icon(Icons.visibility_off_rounded, size: 20),
-                splashColor: themeValue.colorBackgroundMomo,
-                onPressed: () {
-                  _toggle();
-                },
-              )),
-          filled: true,
-          fillColor: Theme.of(context)
-              .colorScheme
-              .colorBackground_TextBox
-              .withOpacity(0.7),
-          contentPadding:
-              const EdgeInsets.symmetric(horizontal: 25, vertical: 17),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.colorBorderActive_TextBox),
-            borderRadius:
-                BorderRadius.circular(themeValue.TextBox_BorderRadius),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.colorBorder_TextBox),
-            borderRadius:
-                BorderRadius.circular(themeValue.TextBox_BorderRadius),
-          ),
-        ),
-      ),
-    );
   }
 
   LoginButtonBox() {
@@ -410,14 +375,20 @@ class LoginNewScreenRouteState extends State<LoginNewScreenRoute>
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 color:
-                    Theme.of(context).colorScheme.colorButtonLogin_Background,
+                Theme
+                    .of(context)
+                    .colorScheme
+                    .colorButtonLogin_Background,
                 borderRadius:
-                    BorderRadius.circular(themeValue.Button_BorderRadius)),
+                BorderRadius.circular(themeValue.Button_BorderRadius)),
             child: Text(
               LocalizationUtil.translate('login_txt')!, //login_btn
               style: TextStyle(
                   fontSize: 14.sp,
-                  color: Theme.of(context).colorScheme.colorButtonLogin_Text),
+                  color: Theme
+                      .of(context)
+                      .colorScheme
+                      .colorButtonLogin_Text),
             ),
           ),
           onTap: () async {
