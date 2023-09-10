@@ -28,7 +28,7 @@ class _LandingState extends State<Landing> with TickerProviderStateMixin {
   String _idToken = "";
 
   startTime() async {
-    var duration = const Duration(milliseconds: 500);
+    var duration = const Duration(milliseconds: 2000);
     return Timer(duration, loadPage);
   }
 
