@@ -95,72 +95,70 @@ class _MyAppState extends State<MyApp> {
             : Brightness.dark,
         statusBarColor: Colors.transparent));
     final themeNotifier = Provider.of<ThemeNotifier>(context);
-    return Consumer<LanguageNotifier>(builder: (context, data, child) {
-      return Sizer(builder: (context, orientation, deviceType) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          builder: (context, widget) {
-            return ScrollConfiguration(
-                behavior: MyBehavior(),
-                child: Directionality(
-                    textDirection: (data.isRTL == null || data.isRTL == "0")
-                        ? ui.TextDirection.ltr
-                        : ui.TextDirection.rtl,
-                    child: widget!));
-          },
-          title: appName,
-          theme: ThemeData(
-            primaryColor: Colors.blue,
-            splashColor: themeValue.splashColorLight,
-            fontFamily: 'Sarabun',
-            //'Neue Helvetica',
-            canvasColor: Colors.blue,
-            brightness: themeValue.brightnessLight,
-            scaffoldBackgroundColor: themeValue.splashBackgroundColorLight,
-            appBarTheme: const AppBarTheme(
-                elevation: 0.0,
-                backgroundColor: Colors.transparent,
-                systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarBrightness: themeValue.statusBarBrightnessLight,
-                    statusBarIconBrightness: themeValue.statusBarIconBrightnessLight,
-                    statusBarColor: themeValue.statusBarColorLight)),
-            // colorScheme:
-            //     ColorScheme.fromSwatch(primarySwatch: Colors.red)
-            //         .copyWith(
-            //             secondary: Colors.red,
-            //             brightness: Brightness.light),
-          ),
-          darkTheme: ThemeData(
-            fontFamily: 'Sarabun',
-            primaryColor: Colors.red,
-            splashColor:  themeValue.splashColorDark,
-            brightness: themeValue.brightnessDark,
-            canvasColor:  Colors.red,
-            scaffoldBackgroundColor:  themeValue.splashBackgroundColorDark,
-            appBarTheme: const AppBarTheme(
-                elevation: 0.0,
-                backgroundColor:  Colors.transparent,
-                systemOverlayStyle: SystemUiOverlayStyle(
-                    statusBarBrightness: themeValue.statusBarBrightnessDark,
-                    statusBarIconBrightness: themeValue.statusBarIconBrightnessDark,
-                    statusBarColor: themeValue.statusBarColorDark)),
-            // colorScheme:
-            //     ColorScheme.fromSwatch(primarySwatch: Colors.red)
-            //         .copyWith(
-            //             secondary: Colors.red, brightness: Brightness.dark),
-          ),
-          initialRoute: '/',
-          routes: {
-            '/': (context) => Landing(),
-            '/home': (context) => HomeScreenRoute(),
-            '/login': (context) => LoginNewScreenRoute(),
-          },
-          themeMode: themeNotifier.getThemeMode(),
-        );
-      });
+    return Sizer(builder: (context, orientation, deviceType) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        // builder: (context, widget) {
+        //   return ScrollConfiguration(
+        //       behavior: MyBehavior(),
+        //       child: Directionality(
+        //           textDirection: (data.isRTL == null || data.isRTL == "0")
+        //               ? ui.TextDirection.ltr
+        //               : ui.TextDirection.rtl,
+        //           child: widget!));
+        // },
+        title: appName,
+        theme: ThemeData(
+          primaryColor: Colors.blue,
+          splashColor: themeValue.splashColorLight,
+          fontFamily: 'Sarabun',
+          //'Neue Helvetica',
+          canvasColor: Colors.blue,
+          brightness: themeValue.brightnessLight,
+          scaffoldBackgroundColor: themeValue.splashBackgroundColorLight,
+          appBarTheme: const AppBarTheme(
+              elevation: 0.0,
+              backgroundColor: Colors.transparent,
+              systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarBrightness: themeValue.statusBarBrightnessLight,
+                  statusBarIconBrightness: themeValue.statusBarIconBrightnessLight,
+                  statusBarColor: themeValue.statusBarColorLight)),
+          // colorScheme:
+          //     ColorScheme.fromSwatch(primarySwatch: Colors.red)
+          //         .copyWith(
+          //             secondary: Colors.red,
+          //             brightness: Brightness.light),
+        ),
+        darkTheme: ThemeData(
+          fontFamily: 'Sarabun',
+          primaryColor: Colors.red,
+          splashColor:  themeValue.splashColorDark,
+          brightness: themeValue.brightnessDark,
+          canvasColor:  Colors.red,
+          scaffoldBackgroundColor:  themeValue.splashBackgroundColorDark,
+          appBarTheme: const AppBarTheme(
+              elevation: 0.0,
+              backgroundColor:  Colors.transparent,
+              systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarBrightness: themeValue.statusBarBrightnessDark,
+                  statusBarIconBrightness: themeValue.statusBarIconBrightnessDark,
+                  statusBarColor: themeValue.statusBarColorDark)),
+          // colorScheme:
+          //     ColorScheme.fromSwatch(primarySwatch: Colors.red)
+          //         .copyWith(
+          //             secondary: Colors.red, brightness: Brightness.dark),
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => Landing(),
+          '/home': (context) => HomeScreenRoute(),
+          '/login': (context) => LoginNewScreenRoute(),
+        },
+        themeMode: themeNotifier.getThemeMode(),
+      );
     });
   }
 }

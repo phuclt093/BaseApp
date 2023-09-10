@@ -28,14 +28,15 @@ class _LandingState extends State<Landing> with TickerProviderStateMixin {
   String _idToken = "";
 
   startTime() async {
-    var duration = const Duration(milliseconds: 2300);
+    var duration = const Duration(milliseconds: 500);
     return Timer(duration, loadPage);
   }
 
   @override
   void initState() {
     () async {
-      startTime();
+       startTime();
+      // loadPage();
     }();
 
     super.initState();
@@ -46,23 +47,23 @@ class _LandingState extends State<Landing> with TickerProviderStateMixin {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return Scaffold(
         body: Stack(children: <Widget>[
-          Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  height: 200,
-                ),
-                Container(
-                  height: 40,
-                ),
-                AnimatedOpacity(
-                  opacity: finishLoading ? 0.0 : 1.0,
-                  duration: const Duration(milliseconds: 500),
-                  child: ProgressCircleCenter(context).buildLoading(),
-                )
-              ]),
-        ]));
+      Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              height: 200,
+            ),
+            Container(
+              height: 40,
+            ),
+            AnimatedOpacity(
+              opacity: finishLoading ? 0.0 : 1.0,
+              duration: const Duration(milliseconds: 500),
+              child: ProgressCircleCenter(context).buildLoading(),
+            )
+          ]),
+    ]));
   }
 
   void setFinishWorking(bool status) {
@@ -104,6 +105,4 @@ class _LandingState extends State<Landing> with TickerProviderStateMixin {
           CupertinoPageRoute(builder: (context) => LoginNewScreenRoute()));
     }
   }
-
-
 }
